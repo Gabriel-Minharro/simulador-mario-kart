@@ -1,15 +1,15 @@
 const PLAYER_ONE = {
-    name: 'Mario',
-    speed: 4,
-    control: 3,
-    power: 3
+    NAME: 'Mario',
+    SPEED: 4,
+    CONTROL: 3,
+    POWER: 3
 };
 
 const PLAYER_TWO = {
-    name: 'Wario',
-    speed: 2,
-    control: 5,
-    power: 3
+    NAME: 'Wario',
+    SPEED: 2,
+    CONTROL: 5,
+    POWER: 3
 };
 
 async function rollDice(){
@@ -33,10 +33,50 @@ async function getRandomBlock(){
     return block;
 }
 
-(async function main() {
+async function logResult(characterName, block, diceResult, attribute) {
+    console.log(
+      `${characterName} 🎲 rolou um dado de ${block} ${diceResult} + ${attribute} = ${
+        diceResult + attribute
+      }`
+    );
+  }
 
+async function raceEngine (firstPlayer, secondPlayer){
     for (let round = 1; round <= 5; round++) {
-        console.log(getRandomBlock())
+        let block = await getRandomBlock();
+        console.log(`Bloco: ${block}`);
+        //roll dices
+        let diceResult1 = await rollDice();
+        let diceResult2 = await rollDice();
+    
+        //testes de habilidade
+        
+        let habilityTest1 = 0;
+        let habilityTest2 = 0;
+    
+        if (block === 'RETA'){
+            habilityTest1 = diceResult1 + firstPlayer.SPEED;
+            habilityTest2 = diceResult2 + secondPlayer.SPEED;
+    
+            await logResult(
+                firstPlayer.NAME,
+                "velocidade",
+                diceResult1,
+                firstPlayer.SPEED
+            );
+        
+            await logResult(
+                secondPlayer.NAME,
+                "velocidade",
+                diceResult2,
+                secondPlayer.SPEED
+            );
+        }
     }
 
-})();
+}
+
+(async function main() {
+
+    await raceEngine(PLAYER_ONE, PLAYER_TWO);
+})()
