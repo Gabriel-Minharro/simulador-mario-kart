@@ -111,25 +111,26 @@ async function raceEngine (firstPlayer, secondPlayer){
                 diceResult2,
                 secondPlayer.POWER
             );
-            if (habilityTest1 > habilityTest2 && secondPlayer.SCORE > 0) {
+
+            if (habilityTest1 > habilityTest2 ) {
                 console.log(
-                  `${firstPlayer.NAME} venceu o confronto! ${secondPlayer.POWER} perdeu 1 ponto 🐢`
+                  `${firstPlayer.NAME} venceu o confronto! ${secondPlayer.NAME} perdeu 1 ponto 🐢`
                 );
                 secondPlayer.SCORE--;
-              }
+            }
         
-              if (habilityTest2 > habilityTest1 && character1.SCORE > 0) {
+            if (habilityTest2 > habilityTest1 ) {
                 console.log(
-                  `${secondPlayer.POWER} venceu o confronto! ${firstPlayer.NAME} perdeu 1 ponto 🐢`
+                  `${secondPlayer.NAME} venceu o confronto! ${firstPlayer.NAME} perdeu 1 ponto 🐢`
                 );
                 firstPlayer.SCORE--;
-              }
+            }
         
-              console.log(
+            console.log(
                 habilityTest2 === habilityTest1
                   ? "Confronto empatado! Nenhum ponto foi perdido"
                   : ""
-              );
+            );
         }
     }
 
