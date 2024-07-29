@@ -2,14 +2,16 @@ const PLAYER_ONE = {
     NAME: 'Mario',
     SPEED: 4,
     CONTROL: 3,
-    POWER: 3
+    POWER: 3,
+    SCORE: 0
 };
 
 const PLAYER_TWO = {
     NAME: 'Wario',
     SPEED: 2,
     CONTROL: 5,
-    POWER: 3
+    POWER: 3,
+    SCORE: 0
 };
 
 async function rollDice(){
@@ -71,6 +73,63 @@ async function raceEngine (firstPlayer, secondPlayer){
                 diceResult2,
                 secondPlayer.SPEED
             );
+        }
+
+        if (block === 'CURVA'){
+            habilityTest1 = diceResult1 + firstPlayer.CONTROL;
+            habilityTest2 = diceResult2 + secondPlayer.CONTROL;
+    
+            await logResult(
+                firstPlayer.NAME,
+                "controle",
+                diceResult1,
+                firstPlayer.CONTROL
+            );
+        
+            await logResult(
+                secondPlayer.NAME,
+                "controle",
+                diceResult2,
+                secondPlayer.CONTROL
+            );
+        }
+        
+        if (block === 'CONFRONTO'){
+            habilityTest1 = diceResult1 + firstPlayer.POWER;
+            habilityTest2 = diceResult2 + secondPlayer.POWER;
+    
+            await logResult(
+                firstPlayer.NAME,
+                "poder",
+                diceResult1,
+                firstPlayer.POWER
+            );
+        
+            await logResult(
+                secondPlayer.NAME,
+                "poder",
+                diceResult2,
+                secondPlayer.POWER
+            );
+            if (habilityTest1 > habilityTest2 && secondPlayer.SCORE > 0) {
+                console.log(
+                  `${firstPlayer.NAME} venceu o confronto! ${secondPlayer.POWER} perdeu 1 ponto 🐢`
+                );
+                secondPlayer.SCORE--;
+              }
+        
+              if (habilityTest2 > habilityTest1 && character1.SCORE > 0) {
+                console.log(
+                  `${secondPlayer.POWER} venceu o confronto! ${firstPlayer.NAME} perdeu 1 ponto 🐢`
+                );
+                firstPlayer.SCORE--;
+              }
+        
+              console.log(
+                habilityTest2 === habilityTest1
+                  ? "Confronto empatado! Nenhum ponto foi perdido"
+                  : ""
+              );
         }
     }
 
