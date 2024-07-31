@@ -7,7 +7,7 @@ const PLAYER_ONE = {
 };
 
 const PLAYER_TWO = {
-    NAME: 'Wario',
+    NAME: 'Luide',
     SPEED: 2,
     CONTROL: 5,
     POWER: 3,
@@ -73,6 +73,7 @@ async function raceEngine (firstPlayer, secondPlayer){
                 diceResult2,
                 secondPlayer.SPEED
             );
+            console.log("");
         }
 
         if (block === 'CURVA'){
@@ -92,6 +93,7 @@ async function raceEngine (firstPlayer, secondPlayer){
                 diceResult2,
                 secondPlayer.CONTROL
             );
+            console.log("");
         }
         
         if (block === 'CONFRONTO'){
@@ -112,14 +114,14 @@ async function raceEngine (firstPlayer, secondPlayer){
                 secondPlayer.POWER
             );
 
-            if (habilityTest1 > habilityTest2 ) {
+            if (habilityTest1 > habilityTest2 && secondPlayer.SCORE > 0) {
                 console.log(
-                  `${firstPlayer.NAME} venceu o confronto! ${secondPlayer.NAME} perdeu 1 ponto 🐢`
+                  `${firstPlayer.NAME} venceu o confronto! ${secondPlayer.NAME} Perdeu 1 ponto 🐢`
                 );
                 secondPlayer.SCORE--;
             }
         
-            if (habilityTest2 > habilityTest1 ) {
+            if (habilityTest2 > habilityTest1 && firstPlayer.SCORE > 0) {
                 console.log(
                   `${secondPlayer.NAME} venceu o confronto! ${firstPlayer.NAME} perdeu 1 ponto 🐢`
                 );
@@ -128,15 +130,41 @@ async function raceEngine (firstPlayer, secondPlayer){
         
             console.log(
                 habilityTest2 === habilityTest1
-                  ? "Confronto empatado! Nenhum ponto foi perdido"
+                  ? "Confronto empatado! Ninguém ganhou ponto"
                   : ""
             );
         }
-    }
 
+        if (habilityTest1 > habilityTest2) {
+            console.log(`${firstPlayer.NAME} marcou um ponto!`);
+            firstPlayer.SCORE++;
+        } else if (habilityTest2 > habilityTest1) {
+            console.log(`${secondPlayer.NAME} marcou um ponto!`);
+            secondPlayer.SCORE++;
+        } else {
+            console.log("Confronto empatado! Nenhum ponto foi perdido");
+        }
+    
+      console.log("-----------------------------");
+    }
+}
+
+async function raceWinner(firstPlayer, secondPlayer) {
+    console.log(`A pontuação final do ${firstPlayer.NAME} foi de: ${firstPlayer.SCORE} `);
+    console.log(`A pontuação final do ${secondPlayer.NAME} foi de: ${secondPlayer.SCORE} `);
+    console.log("");
+    if(firstPlayer.SCORE > secondPlayer.SCORE) {
+        console.log(`O vencedor foi: ${firstPlayer.NAME}!`)
+    } else {
+        console.log(`O vencedor foi: ${secondPlayer.NAME}!`)
+    }
 }
 
 (async function main() {
 
+    console.log(`Iniciando a corrida entre ${PLAYER_ONE.NAME} e ${PLAYER_TWO.NAME}`);
+    console.log("");
+
     await raceEngine(PLAYER_ONE, PLAYER_TWO);
+    await raceWinner(PLAYER_ONE, PLAYER_TWO);
 })()
